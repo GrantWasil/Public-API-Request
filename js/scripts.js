@@ -39,6 +39,8 @@ function generateUserHTML(data) {
         <p class="card-text cap">${user.location.city}, ${user.location.state}</p>
       </div>
       `;
+
+    // Add event listener to each card to create a modal when they are clicked on
     card.addEventListener("click", () => {
       const modal = document.createElement("div");
       modal.className = "modal-container";
@@ -48,23 +50,34 @@ function generateUserHTML(data) {
           <div class="modal">
               <button type="button" id="modal-close-btn" class="modal-close-btn"><strong>X</strong></button>
               <div class="modal-info-container">
-                  <img class="modal-img" src=${user.picture.large} alt="profile picture">
-                  <h3 id="name" class="modal-name cap">${user.name.first} ${user.name.last}</h3>
+                  <img class="modal-img" src=${
+                    user.picture.large
+                  } alt="profile picture">
+                  <h3 id="name" class="modal-name cap">${user.name.first} ${
+        user.name.last
+      }</h3>
                   <p class="modal-text">${user.email}</p>
                   <p class="modal-text cap">${user.location.city}</p>
                   <hr>
                   <p class="modal-text">${user.cell}</p>
-                  <p class="modal-text">${user.location.street}, ${user.location.city}, ${user.location.state} ${user.location.postcode}</p>
-                  <p class="modal-text">Birthday: ${user.dob.date}</p>
+                  <p class="modal-text">${user.location.street}, ${
+        user.location.city
+      }, ${user.location.state} ${user.location.postcode}</p>
+                  <p class="modal-text">Birthday: ${user.dob.date
+                    .toString()
+                    .slice(0, 10)}</p>
               </div>
           </div>
       `;
-      modal.querySelector("button").addEventListener("click", () => {
-        modal.remove();
-      });
+      // Add an event listener to each modal's close "X" to remove the modal when clicked
+      modal
+        .querySelector("button")
+        .addEventListener("click", () => modal.remove());
     });
   });
 }
+
+// Runs the functions to create the page
 getUserProfiles(usersUrl)
   .then(generateUserHTML)
   .catch(e => {
